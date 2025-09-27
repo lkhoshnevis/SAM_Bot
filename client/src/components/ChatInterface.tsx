@@ -41,13 +41,6 @@ export default function ChatInterface({ onSendMessage }: ChatInterfaceProps) {
           <span className="ml-2 text-sm font-medium">Sam</span>
         </div>
 
-        {/* Message Preview */}
-        <div className="flex justify-end mb-4">
-          <div className="bg-primary text-primary-foreground px-4 py-3 rounded-2xl rounded-tr-md max-w-[85%] shadow-sm">
-            <p className="text-sm leading-relaxed">{message}</p>
-          </div>
-        </div>
-
         {/* Input Area */}
         <div className="flex items-center bg-muted rounded-2xl px-4 py-2">
           <div className="flex-1 py-2 px-2">
