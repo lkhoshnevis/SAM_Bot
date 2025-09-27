@@ -71,7 +71,7 @@ export default function LandingPage() {
             Sam bot, the AI that knows everyone
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Chat with it over time and get connected to people you never knew could be valuable
+            Chat over time, get connected to people you never knew could be valuable
           </p>
         </div>
 
