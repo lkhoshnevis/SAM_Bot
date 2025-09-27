@@ -68,7 +68,7 @@ export default function LandingPage() {
         {/* Main Title */}
         <div className="text-center mb-6" data-testid="text-main-title">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
-            Sam bot, the Ai thats friends with everyone
+            Sam bot, the AI that knows everyone
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
             Chat with it over time and get connected to people you never knew could be valuable
