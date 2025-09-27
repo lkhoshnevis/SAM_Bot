@@ -2,15 +2,57 @@ import ChatInterface from "./ChatInterface";
 
 export default function LandingPage() {
   const handleSendMessage = (name: string, message: string) => {
-    // Create SMS URL with the message
-    const phoneNumber = "5599311785"; // Remove formatting for SMS URL
+    const phoneNumber = "5599311785";
+    const formattedNumber = "+15599311785"; // International format often works better
     const encodedMessage = encodeURIComponent(message);
-    const smsUrl = `sms:${phoneNumber}?body=${encodedMessage}`;
     
-    // Open SMS app
-    window.location.href = smsUrl;
+    // Try multiple SMS URL formats for better compatibility
+    const smsUrls = [
+      `sms:${formattedNumber}&body=${encodedMessage}`, // Android/some browsers prefer &
+      `sms:${formattedNumber}?body=${encodedMessage}`, // iOS/others prefer ?
+      `sms://${formattedNumber}?body=${encodedMessage}`, // Alternative format
+      `sms:${phoneNumber}&body=${encodedMessage}`, // Fallback without +1
+    ];
     
-    console.log('Opening SMS to:', phoneNumber, 'with message:', message);
+    console.log('Trying SMS formats:', smsUrls);
+    
+    // Try the first URL format
+    let success = false;
+    
+    try {
+      // For iOS Safari, create a hidden link and click it
+      const link = document.createElement('a');
+      link.href = smsUrls[0];
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      success = true;
+    } catch (e) {
+      console.log('Link method failed, trying window.location:', e);
+    }
+    
+    // Fallback to window.location if link method fails
+    if (!success) {
+      try {
+        window.location.href = smsUrls[0];
+      } catch (e) {
+        // Final fallback - try opening without the message (at least gets to SMS app)
+        console.log('All SMS methods failed, opening basic SMS:', e);
+        window.location.href = `sms:${formattedNumber}`;
+      }
+    }
+    
+    // Also copy the message to clipboard as backup
+    try {
+      navigator.clipboard.writeText(message).then(() => {
+        console.log('Message copied to clipboard as backup');
+      });
+    } catch (e) {
+      console.log('Clipboard copy failed:', e);
+    }
+    
+    console.log('Opening SMS to:', formattedNumber, 'with message:', message);
   };
 
   return (
